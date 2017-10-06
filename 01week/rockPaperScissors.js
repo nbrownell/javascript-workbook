@@ -11,15 +11,14 @@ const rl = readline.createInterface({
 
 function rockPaperScissors(hand1, hand2) {
 
-  // create an array of the two hands for easier manipulation
-  let handArr = [hand1, hand2];
+  // create a sanitized array of the two hands for easier manipulation
+  let handArr = [hand1, hand2].map((x) => x.toLowerCase().replace(/\s/g, ''));
 
   // declare an array of accepted hand values
   const validHands = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
   
-  // attempt to sanitize the inputs and check if they are valid hands
+  // return an error if the hands chosen are not in the array of accepted values
   for (let value of handArr) {
-    value = value.toLowerCase().replace(/\s/g, '');
     if (!validHands.includes(value)) {
       return 'Invalid input... Accepted values are ' + validHands.join(', ');
     }
