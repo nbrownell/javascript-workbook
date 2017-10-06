@@ -8,9 +8,41 @@ const rl = readline.createInterface({
 });
 
 
+
 function rockPaperScissors(hand1, hand2) {
 
-  // Write code here
+  // create a sanitized array of the two hands
+  const handArr = [hand1, hand2].map((n) => n.toLowerCase().replace(/\s/g, ''));
+
+  // if hand 1 and hand 2 are the same, we can skip the rest of the logic
+  if (handArr[0] === handArr[1]) return 'It\'s a tie!';
+
+  // if it's not a tie, then see who won
+  // start by defining the winning scenarios for hand 1
+  const hand1Wins = [
+    ['paper', 'rock'],
+    ['rock', 'scissors'],
+    ['scissors', 'paper']
+  ];
+
+  // the winning scenarios for hand 2 are the same as hand 1, but reversed
+  // use JSON parsing hack to deep-copy hand 1 and flip-flop the arrays within
+  const hand2Wins = JSON.parse(JSON.stringify(hand1Wins));
+  hand2Wins.map((n) => n.reverse());
+
+  // check our hand array against each of the winning hand 1 scenarios
+  for (let scenario of hand1Wins) {
+    if (scenario.join() === handArr.join()) {
+      return 'Hand one wins!';
+    }
+  }
+
+  // do the same check but for the hand 2 scenarios
+  for (let scenario of hand2Wins) {
+    if (scenario.join() === handArr.join()) {
+      return 'Hand two wins!';
+    }
+  }
 
 }
 
