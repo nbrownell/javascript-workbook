@@ -50,11 +50,11 @@ function rockPaperScissors(hand1, hand2) {
     
     // create a copy of this hand1Wins scenario in reverse,
     // so we can also check if hand 2 wins
-    let handRev = handArr.slice(0).reverse();
+    const handRev = handArr.slice(0).reverse();
 
     // since we will be evaluating against this scenario twice
     // let's store it to a variable so we only have to run the .join() once
-    let winScenarioStr = win.scenario.join();
+    const winScenarioStr = win.scenario.join();
 
     if (winScenarioStr === handArr.join()) {
       console.log(handArr[0] + ' ' + win.verb + ' ' + handArr[1]);
