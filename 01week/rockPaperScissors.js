@@ -44,32 +44,28 @@ function rockPaperScissors(hand1, hand2) {
     {scenario: ['paper',    'spock'],    verb: 'disproves'  },
     {scenario: ['spock',    'rock'],     verb: 'vaporizes'  }
   ];
-  
-
-  // the scenarios where hand 2 wins are going to be the same as hand 1
-  // but with rock/paper flipped to paper/rock, etc.
-  let hand2Wins = JSON.parse(JSON.stringify(hand1Wins));
-  for (let win of hand2Wins) {
-    win.scenario = win.scenario.reverse();
-  }
 
   // check each hand1Wins scenario to see if it applies to the current game
   for (let win of hand1Wins) {
-    // join the arrays to strings to compare them more easily
-    if (win.scenario.join() === handArr.join()) {
+    
+    // create a copy of this hand1Wins scenario in reverse,
+    // so we can also check if hand 2 wins
+    let handRev = handArr.slice(0).reverse();
+
+    // since we will be evaluating against this scenario twice
+    // let's store it to a variable so we only have to run the .join() once
+    let winScenarioStr = win.scenario.join();
+
+    if (winScenarioStr === handArr.join()) {
       console.log(handArr[0] + ' ' + win.verb + ' ' + handArr[1]);
       return 'Hand one wins!';
-    }
-  }
-
-  // check each hand2Wins scenario to see if it applies to the current game
-  for (let win of hand2Wins) {
-    // join the arrays to strings to compare them more easily
-    if (win.scenario.join() === handArr.join()) {
-      console.log(handArr[1] + ' ' + win.verb + ' ' + handArr[0]);
+    
+    } else if (winScenarioStr === handRev.join()) {
+      console.log(handRev[0] + ' ' + win.verb + ' ' + handRev[1]);
       return 'Hand two wins!';
     }
   }
+
 
 }
 
