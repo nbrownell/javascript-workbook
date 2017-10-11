@@ -18,10 +18,9 @@ function rockPaperScissors(hand1, hand2) {
   const validHands = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
   
   // return an error if the hands chosen are not in the array of accepted values
-  for (let value of handArr) {
-    if (!validHands.includes(value)) {
-      return 'Invalid input... Accepted values are ' + validHands.join(', ');
-    }
+  handArr = handArr.filter(function(hand) { return validHands.includes(hand) });
+  if (handArr.length < 2) {
+    return 'Invalid input. Accepted values are ' + validHands.join(', ');
   }
 
   // if hand 1 and hand 2 are the same, it's a tie, we're done, return early
@@ -29,43 +28,38 @@ function rockPaperScissors(hand1, hand2) {
     return 'It\'s a tie!';
   }
 
-  // if it's not a tie, let's start by defining the scenarios where hand 1 wins
-  // let's also make a note of the verb that goes with each scenario
-  // then we can log an explanation to the console
+  // if it's NOT a tie, define the scenarios where hand 1 wins, noting also the rationale
   const hand1Wins = [
-    {scenario: ['paper',    'rock'],     verb: 'covers'     },
-    {scenario: ['rock',     'scissors'], verb: 'crushes'    },
-    {scenario: ['scissors', 'paper'],    verb: 'cut'        },
-    {scenario: ['rock',     'lizard'],   verb: 'crushes'    },
-    {scenario: ['lizard',   'spock'],    verb: 'poisons'    },
-    {scenario: ['spock',    'scissors'], verb: 'smashes'    },
-    {scenario: ['scissors', 'lizard'],   verb: 'decapitate' },
-    {scenario: ['lizard',   'paper'],    verb: 'eats'       },
-    {scenario: ['paper',    'spock'],    verb: 'disproves'  },
-    {scenario: ['spock',    'rock'],     verb: 'vaporizes'  }
+    {scenario: ['paper',    'rock'],     rationale: 'covers'     },
+    {scenario: ['rock',     'scissors'], rationale: 'crushes'    },
+    {scenario: ['scissors', 'paper'],    rationale: 'cut'        },
+    {scenario: ['rock',     'lizard'],   rationale: 'crushes'    },
+    {scenario: ['lizard',   'spock'],    rationale: 'poisons'    },
+    {scenario: ['spock',    'scissors'], rationale: 'smashes'    },
+    {scenario: ['scissors', 'lizard'],   rationale: 'decapitate' },
+    {scenario: ['lizard',   'paper'],    rationale: 'eats'       },
+    {scenario: ['paper',    'spock'],    rationale: 'disproves'  },
+    {scenario: ['spock',    'rock'],     rationale: 'vaporizes'  }
   ];
 
   // check each hand1Wins scenario to see if it applies to the current game
   for (let win of hand1Wins) {
     
-    // create a copy of this hand1Wins scenario in reverse,
-    // so we can also check if hand 2 wins
+    // create a reversed copy of this hand so we can also check for a hand 2 win
     const handRev = handArr.slice(0).reverse();
 
-    // since we will be evaluating against this scenario twice
-    // let's store it to a variable so we only have to run the .join() once
+    // store this joined array for later use since we'll be checking against it twice
     const winScenarioStr = win.scenario.join();
 
     if (winScenarioStr === handArr.join()) {
-      console.log(handArr[0] + ' ' + win.verb + ' ' + handArr[1]);
+      console.log(handArr[0] + ' ' + win.rationale + ' ' + handArr[1]);
       return 'Hand one wins!';
     
     } else if (winScenarioStr === handRev.join()) {
-      console.log(handRev[0] + ' ' + win.verb + ' ' + handRev[1]);
+      console.log(handRev[0] + ' ' + win.rationale + ' ' + handRev[1]);
       return 'Hand two wins!';
     }
   }
-
 
 }
 
